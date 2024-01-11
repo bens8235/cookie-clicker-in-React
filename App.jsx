@@ -4,12 +4,31 @@ import Button from "./Button.jsx";
 import upgrades from "./upgrades.js";
 
 export default function App() {
-  const [upgrade1Cost, upgrade1CostUpdate] = useState(10);
-  const [upgrade2Cost, upgrade2CostUpdate] = useState(30);
-  const [upgrade2, upgrade2Bool] = useState(false);
-  const [cookieStep, setCookieStep] = useState(1);
-  const [cookies, setCookies] = useState(0);
-  const [cps, setCps] = useState(0);
+  // localStorage.clear();
+  let obj = JSON.parse(localStorage.getItem("myObj"));
+
+  if (obj === null) {
+    obj = {
+      upgrade1Cost: 10,
+      upgrade2Cost: 30,
+      upgrade2: false,
+      cookieStep: 1,
+      cookies: 0,
+      cps: 0,
+    };
+  }
+
+  const [upgrade1Cost, upgrade1CostUpdate] = useState(obj.upgrade1Cost);
+  const [upgrade2Cost, upgrade2CostUpdate] = useState(obj.upgrade2Cost);
+  const [upgrade2, upgrade2Bool] = useState(obj.upgrade2);
+  const [cookieStep, setCookieStep] = useState(obj.cookieStep);
+  const [cookies, setCookies] = useState(obj.cookies);
+  const [cps, setCps] = useState(obj.cps);
+
+  const [colour1, colourChange1] = useState(false);
+  const [colour2, colourChange2] = useState(false);
+
+  //
 
   useEffect(
     function () {
@@ -26,6 +45,33 @@ export default function App() {
       }
     },
     [cps]
+  );
+
+  useEffect(
+    function () {
+      if (cookies >= upgrade1Cost) {
+        colourChange1(true);
+      } else {
+        colourChange1(false);
+      }
+
+      if (cookies >= upgrade2Cost) {
+        colourChange2(true);
+      } else {
+        colourChange2(false);
+      }
+
+      const myObj = {
+        cookies: cookies,
+        cps: cps,
+        cookieStep: cookieStep,
+        upgrade1Cost: upgrade1Cost,
+        upgrade2Cost: upgrade2Cost,
+        upgrade2: upgrade2,
+      };
+      localStorage.setItem("myObj", JSON.stringify(myObj));
+    },
+    [cookies]
   );
 
   // function createButton(button) {
@@ -81,11 +127,13 @@ export default function App() {
           func={upgrade1}
           phrase="Increase count per click. Cost: "
           cost={upgrade1Cost}
+          colour={colour1}
         />
         <Button
           func={increaseCps}
           phrase="Increase cookies per second. Cost: "
           cost={upgrade2Cost}
+          colour={colour2}
         />
       </div>
     </div>
