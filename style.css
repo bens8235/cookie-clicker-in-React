@@ -1,0 +1,44 @@
+body {
+  background-color: chocolate;
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+#cookie-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#cookie-stats {
+  display: flex;
+  flex-direction: column;
+}
+#button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+}
+
+#cookie:active {
+  transform: translateY(5px);
+}
+
+button:hover {
+  border: 2px solid white;
+}
+
+button:active {
+  transform: translateY(5px);
+}
+
+button {
+  background: none;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5%;
+}
