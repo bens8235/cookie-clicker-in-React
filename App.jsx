@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Button from "./Button.jsx";
+import upgrades from "./upgrades.js";
 
 export default function App() {
   const [upgrade1Cost, upgrade1CostUpdate] = useState(10);
@@ -26,6 +27,17 @@ export default function App() {
     },
     [cps]
   );
+
+  // function createButton(button) {
+  //   return (
+  //     <Button
+  //       key={button.id}
+  //       func={button.item}
+  //       phrase={button.phrase}
+  //       cost={button.cost}
+  //     />
+  //   );
+  // }
 
   function increaseCps() {
     if (cookies >= upgrade2Cost) {
@@ -64,12 +76,17 @@ export default function App() {
         />
       </div>
       <div id="button-container">
-        <button onClick={upgrade1}>
-          Increase count per click. Cost: {upgrade1Cost}
-        </button>
-        <button onClick={increaseCps}>
-          Increase cookies per second. Cost: {upgrade2Cost}
-        </button>
+        {/* {upgrades.map(createButton)} */}
+        <Button
+          func={upgrade1}
+          phrase="Increase count per click. Cost: "
+          cost={upgrade1Cost}
+        />
+        <Button
+          func={increaseCps}
+          phrase="Increase cookies per second. Cost: "
+          cost={upgrade2Cost}
+        />
       </div>
     </div>
   );
